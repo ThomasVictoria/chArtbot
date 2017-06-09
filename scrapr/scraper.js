@@ -1,25 +1,21 @@
-const artoo = require('artoo-js'),
-	request = require('request')
-    cheerio = require('cheerio');
+const artoo   = require('artoo-js'),
+	  cheerio = require('cheerio');
+	
+var route = require('./function/route');
 
 const domain = 'http://www.lesartsdecoratifs.fr/'
 
-var item = require("./function/item")
-var result = {}
 artoo.bootstrap(cheerio);
 
-var options = {
+var current_event = {
 	method: "GET",
 	url: domain+'?page=expo-actu'
 }
 
-request.get(options, (error, response, body) => {
-	var $ = cheerio.load(body);
-	var items = $('ul.liste_enfants li a').scrape({
-		link: 'href',
-	})
+var futur_event = {
+	method: "GET",
+	url: domain+'?page=expo-avenir'
+}
 
-	items.forEach((element) => {
-		console.log(item.scrape(element, domain))
-	})
-})
+route.scrap_route(current_event, domain)
+route.scrap_route(futur_event, domain)

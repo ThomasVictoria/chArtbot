@@ -1,7 +1,11 @@
 const artoo = require('artoo-js'),
 	request = require('request'),
-    cheerio = require('cheerio')
+    cheerio = require('cheerio'),
+    MongoClient = require('mongodb').MongoClient,
+    assert = require('assert'),
     encoding    = require('encoding');
+
+var db_url = 'mongodb://localhost:27017/chartbot'
 
 module.exports = {
 	scrape: function(element, root){
@@ -46,13 +50,18 @@ module.exports = {
 				}
 			})
 
-			return Object.assign(header[0], image[0], title[0], info[0])
+			that.save(Object.assign(header[0], image[0], title[0], info[0]))
 		})
 	},
 	clean_string: function(string){
 		return string.replace(/(?:\r\n|\r|\n)/g, ' ').replace( /  +/g, ' ' ).replace('Hashtag', '');
-	}
+	},
 	save: function(object){
+		MongoClient.connect(db_url, function(err, db) {
+			assert.equal(null, err);
+			console.log("Connected successfully to server");
 
+			db.close();
+		});
 	}
 }

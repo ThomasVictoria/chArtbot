@@ -8,7 +8,7 @@ const artoo = require('artoo-js'),
 var db_url = 'mongodb://localhost:27017/chartbot'
 
 module.exports = {
-	scrape: function(element, root){
+	scrape: function(element, root, type){
 		var options = {
 			method: "GET",
 			url: root+element.link
@@ -26,17 +26,26 @@ module.exports = {
 					return that.clean_string($(this).find('h2').text())
 				}
 			})
-			var image = $('#logo_une .image').scrape({
-				image_link: function(){
-					path = $(this).find('a').attr('href')
-					return root+path
-				}
-			})
+			if (type == "current"){
+				var image = $('#logo_une .image').scrape({
+					image_link: function(){
+						path = $(this).find('a').attr('href')
+						return root+path
+					}
+				})
+			} else {
+				var image = $('section.le_logo a').scrape({
+					image_link: function(){
+						path = $(this).find('img').attr('src')
+						return root+path
+					}
+				})
+			}		
 			var header = $('.chapeau p').scrape({
 				header: 'text'
 			})
 
-			var info = $('section.colonnes_texte div.col_annexe div.contenu_h3').scrape({
+			var info = $('section.colonnes_texte .col_annexe div.contenu_h3').scrape({
 				address: function(){
 					if (typeof $(this).find('p strong').html() == "string") {
 						return $(this).find('p strong').html().split("<br class=\"manualbr\">").join(" ").split("&#xE9;").join("é")
@@ -50,17 +59,20 @@ module.exports = {
 				}
 			})
 
-			that.save(Object.assign(header[0], image[0], title[0], info[0]))
+			that.save(Object.assign(header[0], image[0], title[0], info[0]), type)
 		})
 	},
 	clean_string: function(string){
 		return string.replace(/(?:\r\n|\r|\n)/g, ' ').replace( /  +/g, ' ' ).replace('Hashtag', '');
 	},
-	save: function(object){
+	save: function(object, type){
 		MongoClient.connect(db_url, function(err, db) {
 			assert.equal(null, err);
 			console.log("Connected successfully to server");
-
+			console.log("Saving "+type+" events");
+			
+			db.collection(type).drop()
+			db.collection(type).insert(object)
 			db.close();
 		});
 	}

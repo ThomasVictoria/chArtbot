@@ -17,5 +17,5 @@ var futur_event = {
 	url: domain+'?page=expo-avenir'
 }
 
-route.scrap_route(current_event, domain)
-route.scrap_route(futur_event, domain)
+route.scrap_route(current_event, domain, "current")
+route.scrap_route(futur_event, domain, "futur")

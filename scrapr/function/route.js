@@ -4,7 +4,7 @@ const request = require('request'),
 const item = require('./item');
 
 module.exports = {
-	scrap_route: function(options, domain){
+	scrap_route: function(options, domain, type){
 		request.get(options, (error, response, body) => {
 			var $ = cheerio.load(body);
 			var items = $('ul.liste_enfants li a').scrape({
@@ -12,7 +12,7 @@ module.exports = {
 			})
 
 			items.forEach((element) => {
-				item.scrape(element, domain)
+				item.scrape(element, domain, type)
 			})
 		})
 	}

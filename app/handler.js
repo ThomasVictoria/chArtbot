@@ -3,6 +3,7 @@ const request  = require('request'),
 	  list	   = require('./templates/list'),
 	  mongo	   = require('./templates/mongo'),
 	  button   = require('./templates/button'),
+	  video    = require('./templates/video'),
 	  variable = require('../variable');
 
 var handler = {
@@ -28,6 +29,9 @@ var handler = {
 						})
 					}
 			    } else if (event.message) {
+			    	if(event.message.text == 'video'){
+						handler.send(video.videoMessage(senderID))
+			    	}
 					console.log(event.message)
 			    }
 			});

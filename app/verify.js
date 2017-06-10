@@ -1,4 +1,5 @@
-const crypto = require('crypto');
+const crypto   = require('crypto')
+	  variable = require('../variable');
 
 module.exports ={
 	verifyRequestSignature: function(req, res, buf){
@@ -11,7 +12,7 @@ module.exports ={
 			var method = elements[0];
 			var signatureHash = elements[1];
 
-			var expectedHash = crypto.createHmac('sha1', '6054f880810f19ccf6fadf5f6084384a')
+			var expectedHash = crypto.createHmac('sha1', variable.AppSecret)
 			                    .update(buf)
 			                    .digest('hex');
 

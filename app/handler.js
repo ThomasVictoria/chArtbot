@@ -1,7 +1,6 @@
 module.exports =  {
   receive: function (req, res) {
 	  var data = req.body;
-
 	  if (data.object == 'page') {
 
 	    data.entry.forEach(function(pageEntry) {

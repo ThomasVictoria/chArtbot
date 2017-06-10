@@ -10,8 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "artoo-js": "^0.3.4",
+    "body-parser": "^1.17.2",
     "cheerio": "^1.0.0-rc.1",
+    "crypto": "0.0.3",
     "encoding": "^0.1.12",
+    "express": "^4.15.3",
+    "https": "^1.0.0",
     "mongodb": "^2.2.28",
     "node-cron": "^1.2.0",
     "request": "^2.81.0"

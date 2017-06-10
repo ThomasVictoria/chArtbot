@@ -3,10 +3,10 @@ const bodyParser = require('body-parser'),
 	  https = require('https');
 
 const scrapr = require('./scrapr/scraper'),
-	  verify = require('./function/verify'),
-	  cron   = require('./function/cron'),
-	  oauth   = require('./function/oauth'),
-	  handler   = require('./function/handler'),
+	  verify = require('./app/verify'),
+	  cron   = require('./app/cron'),
+	  oauth   = require('./app/oauth'),
+	  handler   = require('./app/handler'),
 	  app = express();
 
 app.set('port', process.env.PORT || 5000);

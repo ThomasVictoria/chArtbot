@@ -1,5 +1,10 @@
-const jbuilder = require('jbuilder')
+const list = module.exports = {
+	parseObject: function(objects) {
 
-modules.exports = {
-	
+	},
+	makeList: function(senderID, objects) {
+		
+	}
 }
+
+module.exports = list

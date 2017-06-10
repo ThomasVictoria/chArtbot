@@ -1,18 +1,64 @@
-module.exports =  {
-  receive: function (req, res) {
-	  var data = req.body;
-	  if (data.object == 'page') {
+const request  = require('request'),
+	  text	   = require('./templates/text'),
+	  list	   = require('./templates/list'),
+	  mongo	   = require('./templates/mongo'),
+	  button   = require('./templates/button'),
+	  variable = require('../variable');
 
-	    data.entry.forEach(function(pageEntry) {
-	      var pageID = pageEntry.id;
-	      var timeOfEvent = pageEntry.time;
+var handler = {
+	receive: function (req, res) {
+		var data = req.body;
+		if (data.object == 'page') {
+		
+		data.entry.forEach((pageEntry) => {
+			pageEntry.messaging.forEach((event) => {
+				console.log(event)
 
-	      pageEntry.messaging.forEach(function(messagingEvent) {
-	      	console.log(messagingEvent)
-	      });
-	    });
+				var senderID = event.sender.id;
+			    var recipientID = event.recipient.id;
+			    var timeOfMessage = event.timestamp;
+			    var message = event.message;
 
-	    res.sendStatus(200);
-	  }
-  }
+			    if(event.postback){
+			    	if (event.postback.payload == 'current' ) {
+						mongo.getCollection(event.postback.payload, (err, result) => {
+							console.log(result)
+						})
+			    	} else if (event.postback.payload == 'futur') {
+						mongo.getCollection(event.postback.payload, (err, result) => {
+							console.log(result)
+						})
+			    	}
+			    } else if (event.message) {
+					console.log(event.message)
+			    }
+
+			    // handler.send(button.eventType(senderID))
+			});
+		});
+
+		res.sendStatus(200);
+		}
+	},
+	send: function(json){
+		console.log(json)
+		request({
+			uri: 'https://graph.facebook.com/v2.9/me/messages?access_token='+variable.FaceBookAccessToken,
+			method: 'POST',
+			json: json,
+		}, handler.callback)
+	},
+	callback: function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var recipientId = body.recipient_id;
+			var messageId = body.message_id;
+
+			if (messageId) {
+			  // console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
+			}
+		} else {
+			console.log("Error: "+response.statusCode+", "+error)
+		}
+	}
 }
+module.exports = handler

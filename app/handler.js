@@ -20,20 +20,16 @@ var handler = {
 			    var message = event.message;
 
 			    if(event.postback){
-			    	if (event.postback.payload == 'current' ) {
+			    	if (event.postback.payload == 'current' || event.postback.payload == 'futur') {
 						mongo.getCollection(event.postback.payload, (err, result) => {
-							console.log(result)
+							event_list = list.makeList(senderID, result)
+							console.log(event_list.message.attachment.payload.elements[0].buttons)
+							handler.send(event_list)
 						})
-			    	} else if (event.postback.payload == 'futur') {
-						mongo.getCollection(event.postback.payload, (err, result) => {
-							console.log(result)
-						})
-			    	}
+					}
 			    } else if (event.message) {
 					console.log(event.message)
 			    }
-
-			    // handler.send(button.eventType(senderID))
 			});
 		});
 
@@ -54,10 +50,11 @@ var handler = {
 			var messageId = body.message_id;
 
 			if (messageId) {
-			  // console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
+			  console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
 			}
 		} else {
-			console.log("Error: "+response.statusCode+", "+error)
+			// console.log("Error: "+response.statusCode+", "+error+", "+body)
+			console.log(body)
 		}
 	}
 }

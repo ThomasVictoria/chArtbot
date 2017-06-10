@@ -26,5 +26,19 @@ module.exports = {
 				}
 			}
 		}
+	},
+	readMore: function(id){
+		return {
+			title: 'En savoir plus',
+			type: 'postback',
+			payload: 'readMore'+id
+		}
+	},
+	linkButton: function(url, title){
+		return {
+			title: title,
+			type: 'web_url',
+			url: url
+		}
 	}
 }

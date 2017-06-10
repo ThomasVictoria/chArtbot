@@ -5,12 +5,18 @@ const bodyParser = require('body-parser'),
 const scrapr = require('./scrapr/scraper'),
 	  verify = require('./function/verify'),
 	  cron   = require('./function/cron'),
+	  oauth   = require('./function/oauth'),
+	  handler   = require('./function/handler'),
 	  app = express();
 
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verify.verifyRequestSignature }));
 app.use(express.static('public'));
+
+// webhooks 
+app.get('/webhook', oauth.webhook);
+app.post('/webhook', handler.receive);
 
 // test route
 app.get('/test',function (req, res) {

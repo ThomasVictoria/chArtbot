@@ -59,20 +59,28 @@ module.exports = {
 				}
 			})
 
-			that.save(Object.assign(header[0], image[0], title[0], info[0]), type)
+			that.save(Object.assign(header[0], image[0], title[0], info[0], {type: type}))
 		})
 	},
 	clean_string: function(string){
 		return string.replace(/(?:\r\n|\r|\n)/g, ' ').replace( /  +/g, ' ' ).replace('Hashtag', '');
 	},
-	save: function(object, type){
+	save: function(object){
 		MongoClient.connect(db_url, function(err, db) {
 			assert.equal(null, err);
 			console.log("Connected successfully to server");
-			console.log("Saving "+type+" events");
+			console.log(object)
 			
-			db.collection(type).drop()
-			db.collection(type).insert(object)
+			db.collection('event').insert(object)
+			db.close();
+		});
+	},
+	clean: function(){
+		MongoClient.connect(db_url, function(err, db) {
+			assert.equal(null, err);
+			console.log("Cleaning database")
+
+			db.collection('event').drop()
 			db.close();
 		});
 	}

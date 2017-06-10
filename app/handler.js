@@ -24,13 +24,21 @@ var handler = {
 			    	if (event.postback.payload == 'current' || event.postback.payload == 'futur') {
 						mongo.getCollection(event.postback.payload, (err, result) => {
 							event_list = list.makeList(senderID, result)
-							console.log(event_list.message.attachment.payload.elements[0].buttons)
 							handler.send(event_list)
 						})
+					} else if (event.postback.payload.indexOf("readMore") !== -1){
+						var id = event.postback.payload.substr(8, event.postback.payload.lenght)
+						mongo.getDescription(id, (err, result) => {
+							console.log(result)
+							// handler.send(text.textMessage(senderID, ))
+						})
+						event.postback.payload.substr(8, event.postback.payload.lenght)
 					}
 			    } else if (event.message) {
 			    	if(event.message.text == 'video'){
 						handler.send(video.videoMessage(senderID))
+			    	} else if(event.message.text == "button"){
+			    		handler.send(button.eventType(senderID))
 			    	}
 					console.log(event.message)
 			    }
@@ -39,6 +47,9 @@ var handler = {
 
 		res.sendStatus(200);
 		}
+	},
+	userTracking: function(){
+
 	},
 	send: function(json){
 		console.log(json)

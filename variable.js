@@ -1,3 +1,4 @@
 module.exports.FaceBookAccessToken = "EAABnrwl5C3sBAHH1UYJKu47q3Tg9TEfEnq4Q2uetu5oeNZCixcePNXw8KSt8E6Re8B63hsHMupoMR3ZAoURxaO5J10MHFBS3e53ky51cQAbOootaAWmjfSA9mmUk1whVX0iO6vtPwQul2Wuvd3QWIXLsed5kOQlq0Gr14fGQZDZD"
 module.exports.FaceBookVerifyToken = "bloublou"
 module.exports.AppSecret = "b9087e68ff490d031d5119e46b8bb438"
+module.exports.MongoUrl = "mongodb://heroku_qnfm1m4b:thomasleplusbeau@ds121212.mlab.com:21212/heroku_qnfm1m4b"

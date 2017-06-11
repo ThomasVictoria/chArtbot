@@ -1,5 +1,5 @@
 const cron = require('node-cron'),
-	  scrapr = require('../scrapr/scraper');
+	scrapr = require('../scrapr/scraper');
 
 module.exports = {
 	init: function(){

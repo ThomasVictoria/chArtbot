@@ -1,5 +1,5 @@
-module.exports = {
-	eventType: function(senderId){
+var button = {
+	eventType: function(senderId, text){
 		return {
 			recipient: {
 				id: senderId
@@ -9,21 +9,21 @@ module.exports = {
 					type: 'template',
 					payload: {
 						template_type: 'button',
-						text: 'Sur quel type d\'évenement voulez vous vous renseigner?',
+						text: text,
 						buttons:[
 							{
 								type: 'postback',
-								title: 'Les évènements en cours',
+								title: 'Évènements en cours',
 								payload: 'current'
 							},
 							{
 								type: 'postback',
-								title: 'Les évènements à venir',
+								title: 'Évènements à venir',
 								payload: 'futur'
 							},
 							{
 								type: 'postback',
-								title: 'Les évènements à venir',
+								title: 'Une vidéo :)',
 								payload: 'video'
 							}
 						]
@@ -32,11 +32,32 @@ module.exports = {
 			}
 		}
 	},
-	readMore: function(id){
+	knowMore: function(senderId, object, text){
 		return {
-			title: 'En savoir plus',
+			recipient: {
+				id: senderId
+			},
+			message: {
+				attachment: {
+					type: 'template',
+					payload: {
+						template_type: 'button',
+						text: text,
+						buttons:[
+							button.linkButton(object.article_url, "Page de l'exposition"),
+							button.linkButton(object.acces, "Lieux"),
+							button.linkButton(object.horaires, "Horaires et tarifs")
+						]
+					}
+				}
+			}
+		}
+	},
+	postbackButton: function(payload, text){
+		return {
+			title: text,
 			type: 'postback',
-			payload: 'readMore'+id
+			payload: payload
 		}
 	},
 	linkButton: function(url, title){
@@ -45,5 +66,46 @@ module.exports = {
 			type: 'web_url',
 			url: url
 		}
+	},
+	askContinue: function(senderId, text){
+		return {
+			recipient: {
+				id: senderId
+			},
+			message: {
+				attachment: {
+					type: 'template',
+					payload: {
+						template_type: 'button',
+						text: text,
+						buttons:[
+							button.postbackButton('continue','Non'),
+							button.postbackButton('stop', 'Oui, merci :)' )
+						]
+					}
+				}
+			}
+		}
+	},
+	readMoreLink: function(senderId, url, title, text) {
+		return {
+			recipient: {
+				id: senderId
+			},
+			message: {
+				attachment: {
+					type: 'template',
+					payload: {
+						template_type: 'button',
+						text: text,
+						buttons:[
+							button.linkButton(url, title),
+						]
+					}
+				}
+			}
+		}
 	}
 }
+
+module.exports = button

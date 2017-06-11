@@ -7,7 +7,7 @@ const list = module.exports = {
 			image_url: object.image_link,
 			subtitle: object.dates.charAt(0).toUpperCase() + object.dates.slice(1) + " à " + object.address,
 			buttons: [
-				button.readMore(object._id),
+				button.postbackButton('readMore'+object._id, 'En savoir plus'),
 				button.linkButton(object.acces, 'Accès'),
 				button.linkButton(object.horaires, 'Horaires et tarifs'),
 			]

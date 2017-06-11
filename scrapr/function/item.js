@@ -48,7 +48,8 @@ module.exports = {
 			var info = $('section.colonnes_texte .col_annexe div.contenu_h3').scrape({
 				address: function(){
 					if (typeof $(this).find('p strong').html() == "string") {
-						return $(this).find('p strong').html().split("<br class=\"manualbr\">").join(" ").split("&#xE9;").join("é")
+						var address = $(this).find('p strong').html().split("<br class=\"manualbr\">").join(" ").split("&#xE9;").join("é")
+						return address.substr(0, address.indexOf(75)-1)
 					}
 				},
 				horaires: function(){
@@ -59,7 +60,7 @@ module.exports = {
 				}
 			})
 
-			that.save(Object.assign(header[0], image[0], title[0], info[0], {type: type}))
+			that.save(Object.assign(header[0], image[0], title[0], info[0], {type: type}, {article_url: root+element.link}))
 		})
 	},
 	clean_string: function(string){

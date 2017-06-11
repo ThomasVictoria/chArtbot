@@ -10,18 +10,18 @@ const mongo = module.exports = {
 			db.collection('event').find({ type: type }).toArray(callback)
 		})
 	},
-	getDescription: function(id, callback){
+	getEvent: function(id, callback){
 		var o_id = new mongodb.ObjectId(id);
 		MongoClient.connect(db_url, function(err, db) {
-			db.collection('event').find({ _id: o_id }, {header: 1}).toArray(callback)
+			db.collection('event').find({ _id: o_id }).toArray(callback)
 		})
 	},
-	handleUser: function(senderID, callback){
+	findUser: function(senderID, callback){
 		MongoClient.connect(db_url, function(err, db) {
 			db.collection('user').find({ senderID: senderID }).toArray(callback)
 		})
 	},
-	updateUser: function(result, senderID){
+	sessionUser: function(result, senderID){
 		console.log(result)
 		if (result.length == 0){
 			MongoClient.connect(db_url, function(err, db) {

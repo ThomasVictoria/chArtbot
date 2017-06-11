@@ -19,6 +19,7 @@
     "jbuilder": "0.0.4",
     "mongodb": "^2.2.28",
     "node-cron": "^1.2.0",
+    "node-yaml-config": "0.0.4",
     "request": "^2.81.0"
   }
 }

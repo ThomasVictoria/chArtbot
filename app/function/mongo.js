@@ -2,7 +2,7 @@ const 	MongoClient = require('mongodb').MongoClient,
 		mongodb = require('mongodb')
 		assert = require('assert');
 
-var db_url = 'mongodb://heroku_qnfm1m4b:7d1q75ors5fgpu206an1eudli8@ds121212.mlab.com:21212/heroku_qnfm1m4b'
+var db_url = 'mongodb://heroku_qnfm1m4b:thomasleplusbeau@ds121212.mlab.com:21212/heroku_qnfm1m4b'
 
 const mongo = module.exports = {
 	getCollection: function(type, callback){
@@ -13,6 +13,8 @@ const mongo = module.exports = {
 	getEvent: function(id, callback){
 		var o_id = new mongodb.ObjectId(id);
 		MongoClient.connect(db_url, function(err, db) {
+			assert.equal(null, err);
+			
 			db.collection('event').find({ _id: o_id }).toArray(callback)
 		})
 	},

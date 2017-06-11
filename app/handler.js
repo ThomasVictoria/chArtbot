@@ -1,7 +1,7 @@
 const request  = require('request'),
 	  text	   = require('./templates/text'),
 	  list	   = require('./templates/list'),
-	  mongo	   = require('./templates/mongo'),
+	  mongo	   = require('./function/mongo'),
 	  button   = require('./templates/button'),
 	  video    = require('./templates/video'),
 	  variable = require('../variable');
@@ -29,8 +29,11 @@ var handler = {
 					} else if (event.postback.payload.indexOf("readMore") !== -1){
 						var id = event.postback.payload.substr(8, event.postback.payload.lenght)
 						mongo.getDescription(id, (err, result) => {
-							console.log(result)
-							// handler.send(text.textMessage(senderID, ))
+							if(result[0].header.length <= 640) {
+								handler.send(text.textMessage(senderID, result[0].header))
+								handler.send()
+							}
+
 						})
 						event.postback.payload.substr(8, event.postback.payload.lenght)
 					}
@@ -39,6 +42,11 @@ var handler = {
 						handler.send(video.videoMessage(senderID))
 			    	} else if(event.message.text == "button"){
 			    		handler.send(button.eventType(senderID))
+			    	} else if(event.message.text == "user"){
+			    		mongo.handleUser(senderID, function(err, result){
+			    			var session = mongo.updateUser(result, senderID)
+			    			console.log('Session '+session)
+			    		})
 			    	}
 					console.log(event.message)
 			    }

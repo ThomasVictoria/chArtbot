@@ -25,5 +25,4 @@ var scraper = {
 		route.scrap_route(futur_event, domain, "futur")
 	}
 }
-
 module.exports = scraper

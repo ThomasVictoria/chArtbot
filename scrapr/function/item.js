@@ -78,7 +78,9 @@ module.exports = {
 	clean: function(){
 		MongoClient.connect(db_url, function(err, db) {
 			assert.equal(null, err);
-			console.log("Cleaning database")
+			console.log("Cleaning database, reseting sessions")
+
+			db.collection('user').updateMany({openSession: true}, {$set: {openSession: false}})
 
 			db.collection('event').drop()
 			db.close();

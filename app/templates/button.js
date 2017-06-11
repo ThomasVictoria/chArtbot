@@ -20,6 +20,11 @@ module.exports = {
 								type: 'postback',
 								title: 'Les évènements à venir',
 								payload: 'futur'
+							},
+							{
+								type: 'postback',
+								title: 'Les évènements à venir',
+								payload: 'video'
 							}
 						]
 					}

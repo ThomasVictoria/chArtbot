@@ -79,8 +79,8 @@ var button = {
 						template_type: 'button',
 						text: text,
 						buttons:[
-							button.postbackButton('continue','Non'),
 							button.postbackButton('stop', 'Oui, merci :)' )
+							button.postbackButton('continue','Non'),
 						]
 					}
 				}

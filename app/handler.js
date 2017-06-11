@@ -44,7 +44,9 @@ var handler = {
 								handler.send(button.knowMore(senderID, result[0], wording.action.knowMore))
 								success()
 							}).then(function (){
-								handler.send(button.askContinue(senderID, wording.action.askContinue))
+								setTimeout(function(){
+									handler.send(button.askContinue(senderID, wording.action.askContinue), 2000)								
+								})
 							}).catch(function(){
 								handler.send(text.textMessage(senderID, wording.error.promise))
 							})
@@ -53,11 +55,13 @@ var handler = {
 					} else if (event.postback.payload == "video") {
 						// Set promises to delay messages send
 						new Promise(function(success, error){
+							handler.send(text.textMessage(senderID, wording.action.done))
 							handler.send(video.videoMessage(senderID))
 							success()
 						}).then(function (){
-							handler.send(text.textMessage(senderID, wording.action.done))
-							handler.send(button.eventType(senderID, wording.button.session.true))							
+							setTimeout(function(){
+								handler.send(button.eventType(senderID, wording.button.session.true), 5000)															
+							})
 						}).catch(function(){
 							handler.send(text.textMessage(senderID, wording.error.promise))
 						})

@@ -15,7 +15,6 @@ var handler = {
 		console.log(data)
 		data.entry.forEach((pageEntry) => {
 			pageEntry.messaging.forEach((event) => {
-				// console.log(event)
 
 				var senderID = event.sender.id;
 			    var recipientID = event.recipient.id;
@@ -34,11 +33,13 @@ var handler = {
 					} else if (event.postback.payload.indexOf("readMore") !== -1){
 						var id = event.postback.payload.substr(8, event.postback.payload.length)
 						mongo.getEvent(id, (err, result) => {
+							// Cut text if too big
 							if(result[0].header.length <= 640) {
 								handler.send(text.textMessage(senderID, result[0].header))
 							} else {
 								handler.send(text.textMessage(senderID, result[0].header.substr(0, 635) + "..."))
 							}
+							// Set promises to send messages in right order
 							new Promise(function(success, error){
 								handler.send(button.knowMore(senderID, result[0], wording.action.knowMore))
 								success()
@@ -47,11 +48,10 @@ var handler = {
 							}).catch(function(){
 								handler.send(text.textMessage(senderID, wording.error.promise))
 							})
-							
-							
 						})
 					// Detect if user wants to see a video
 					} else if (event.postback.payload == "video") {
+						// Set promises to delay messages send
 						new Promise(function(success, error){
 							handler.send(video.videoMessage(senderID))
 							success()
@@ -67,8 +67,10 @@ var handler = {
 							// Check first event
 		    				handler.send(button.eventType(senderID, wording.start.session.false))
 			    		})
+			    	// User stop event
 					} else if (event.postback.payload == 'stop') {
 						handler.send(text.textMessage(senderID, wording.action.stop))
+					// User continue event
 					} else if (event.postback.payload == ('continue')){
 	    				handler.send(button.eventType(senderID, wording.button.session.true))
 					}
@@ -105,11 +107,10 @@ var handler = {
 			var messageId = body.message_id;
 
 			if (messageId) {
-			  // console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
+			  console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
 			}
 		} else {
-			// console.log("Error: "+response.statusCode+", "+error+", "+body)
-			// console.log(body)
+			console.log(body)
 		}
 	}
 }

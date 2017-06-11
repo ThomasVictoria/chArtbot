@@ -8,8 +8,8 @@ const list = module.exports = {
 			subtitle: object.dates.charAt(0).toUpperCase() + object.dates.slice(1) + " à " + object.address,
 			buttons: [
 				button.postbackButton('readMore'+object._id, 'En savoir plus'),
-				button.linkButton(object.acces, 'Accès'),
-				button.linkButton(object.horaires, 'Horaires et tarifs'),
+				// button.linkButton(object.acces, 'Accès'),
+				// button.linkButton(object.horaires, 'Horaires et tarifs'),
 			]
 		}
 	},

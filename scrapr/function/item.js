@@ -2,10 +2,8 @@ const artoo = require('artoo-js'),
 	request = require('request'),
     cheerio = require('cheerio'),
     MongoClient = require('mongodb').MongoClient,
-    assert = require('assert'),
-    encoding    = require('encoding');
-
-var db_url = 'mongodb://localhost:27017/chartbot'
+    variable = require('../../variable'),
+    assert = require('assert');
 
 module.exports = {
 	scrape: function(element, root, type){
@@ -67,7 +65,7 @@ module.exports = {
 		return string.replace(/(?:\r\n|\r|\n)/g, ' ').replace( /  +/g, ' ' ).replace('Hashtag', '');
 	},
 	save: function(object){
-		MongoClient.connect(db_url, function(err, db) {
+		MongoClient.connect(variable.MongoUrl, function(err, db) {
 			assert.equal(null, err);
 			console.log("Connected successfully to server");
 			console.log(object)
@@ -77,7 +75,7 @@ module.exports = {
 		});
 	},
 	clean: function(){
-		MongoClient.connect(db_url, function(err, db) {
+		MongoClient.connect(variable.MongoUrl, function(err, db) {
 			assert.equal(null, err);
 			console.log("Cleaning database, reseting sessions")
 

@@ -45,7 +45,7 @@ var button = {
 						text: text,
 						buttons:[
 							button.linkButton(object.article_url, "Page de l'exposition"),
-							button.linkButton(object.acces, "Lieux"),
+							button.linkButton(object.acces, "Accès"),
 							button.linkButton(object.horaires, "Horaires et tarifs")
 						]
 					}
@@ -79,8 +79,8 @@ var button = {
 						template_type: 'button',
 						text: text,
 						buttons:[
-							button.postbackButton('stop', 'Oui, merci :)' )
-							button.postbackButton('continue','Non'),
+							button.postbackButton('stop', 'Oui, merci :)' ),
+							button.postbackButton('continue','Non')
 						]
 					}
 				}

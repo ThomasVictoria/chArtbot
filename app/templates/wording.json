@@ -1,0 +1,25 @@
+{
+	"start": {
+		"session": {
+			"true": "Puis je faire quelque chose pour toi?",
+			"false": "Bonjour, je suis ici pour te conseiller sur les événements des Arts Décoratifs, ou bien simplement te divertir avec une vidéo de qualité :)"
+		}
+	},
+	"button": {
+		"session": {
+			"true": "Que puis je faire pour toi?",
+			"false": "Puis je faire quelque chose d'autre pour toi?"
+		},
+		"readMore": "En savoir plus"
+	},
+	"action": {
+		"done": "Et voilà :)",
+		"knowMore": "Voilà, les informations supplémentaire sur l'exposition",
+		"articlePage": "Page de l'exposition",
+		"askContinue": "As tu eu toutes les informations que tu souhaitais?",
+		"stop": "Heureux de t'avoir été utile, si tu as besoin de quelque chose de plus, écrit moi ;) \n \n Passe une bonne journée :)"
+	},
+	"error": {
+		"promise": "Oh une erreur s'est produit :|"
+	}
+}

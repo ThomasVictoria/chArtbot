@@ -1,5 +1,3 @@
-const jbuilder = require('jbuilder')
-
 module.exports = {
 	textMessage: function(senderId, messageText){
 		return {

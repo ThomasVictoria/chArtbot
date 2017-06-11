@@ -4,7 +4,7 @@ const artoo = require('artoo-js'),
     MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
-var db_url = 'mongodb://localhost:27017/chartbot'
+var db_url = 'mongodb://heroku_qnfm1m4b:7d1q75ors5fgpu206an1eudli8@ds121212.mlab.com:21212/heroku_qnfm1m4b'
 
 module.exports = {
 	scrape: function(element, root, type){

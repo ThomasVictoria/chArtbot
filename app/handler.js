@@ -40,31 +40,21 @@ var handler = {
 								handler.send(text.textMessage(senderID, result[0].header.substr(0, 635) + "..."))
 							}
 							// Set promises to send messages in right order
-							new Promise(function(success, error){
+							setTimeout(function(){
 								handler.send(button.knowMore(senderID, result[0], wording.action.knowMore))
-								success()
-							}).then(function (){
-								setTimeout(function(){
-									handler.send(button.askContinue(senderID, wording.action.askContinue), 2000)								
-								})
-							}).catch(function(){
-								handler.send(text.textMessage(senderID, wording.error.promise))
-							})
+							}, 5000)
+							setTimeout(function(){
+								handler.send(button.askContinue(senderID, wording.action.askContinue))								
+							}, 15000)
 						})
 					// Detect if user wants to see a video
 					} else if (event.postback.payload == "video") {
 						// Set promises to delay messages send
-						new Promise(function(success, error){
-							handler.send(text.textMessage(senderID, wording.action.done))
-							handler.send(video.videoMessage(senderID))
-							success()
-						}).then(function (){
-							setTimeout(function(){
-								handler.send(button.eventType(senderID, wording.button.session.true), 5000)															
-							})
-						}).catch(function(){
-							handler.send(text.textMessage(senderID, wording.error.promise))
-						})
+						handler.send(text.textMessage(senderID, wording.action.done))
+						handler.send(video.videoMessage(senderID))
+						setTimeout(function(){
+							handler.send(button.eventType(senderID, wording.button.session.true))															
+						}, 8000)
 					// Detect get started button
 					} else if (event.postback.payload == 'start') {
 						mongo.findUser(senderID, function(err, result) {
